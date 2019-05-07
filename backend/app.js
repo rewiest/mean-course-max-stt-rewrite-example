@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const userRoutes = require('./routes/user');
-const postsRoutes = require('./routes/posts');
+// const userRoutes = require('./routes/user');
+// const postsRoutes = require('./routes/posts');
 
 const app = express();
 
@@ -31,8 +31,8 @@ app.use((req, res, next) => {
 });
 
 // api paths and routes
-app.use('/api', userRoutes);
-app.use('/api', postsRoutes);
+// app.use('/api', userRoutes);
+// app.use('/api', postsRoutes);
 
 // default path and static html file
 app.all('*', (req,res) => {
