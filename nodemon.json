@@ -1,0 +1,6 @@
+{
+  "env": {
+     "JWT_KEY": "secret_this_should_be_longer",
+     "DB_URL": "https://c8fe624c-1c03-49fe-af43-c5484f2999a0-bluemix:2ae6176dea9143e23990fd40677eee23c83dec4e0ff08d66192bc15652795514@c8fe624c-1c03-49fe-af43-c5484f2999a0-bluemix.cloudant.com"
+  }
+}
