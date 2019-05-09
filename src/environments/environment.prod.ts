@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://stt-rewrite.w3ibm.mybluemix.net'
+  apiUrl: 'https://STT-Rewrite-CFPUSH.w3ibm.mybluemix.net'
 };
