@@ -1,0 +1,7 @@
+# Files listed here will not be deployed
+
+node_modules/
+.DS_Store
+data
+.idea
+nodemon.json
