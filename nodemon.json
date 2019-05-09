@@ -1,6 +1,6 @@
 {
   "env": {
      "JWT_KEY": "secret_this_should_be_longer",
-     "DB_URL": "https://c8fe624c-1c03-49fe-af43-c5484f2999a0-bluemix:2ae6176dea9143e23990fd40677eee23c83dec4e0ff08d66192bc15652795514@c8fe624c-1c03-49fe-af43-c5484f2999a0-bluemix.cloudant.com"
+     "DB_URL": "https://925121aa-f5d9-4fb2-8ecc-cc3035da2b11-bluemix:c4558c602e9f0737c1acc93ae9142545af5abab1353bd55d89be96f23477b876@925121aa-f5d9-4fb2-8ecc-cc3035da2b11-bluemix.cloudant.com"
   }
 }
