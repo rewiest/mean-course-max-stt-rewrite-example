@@ -1,7 +1,9 @@
+---
 applications:
-- path: .
-  name: STT-Rewrite-CFPUSH
+- name: STT-Rewrite-CFPUSH
+  path: .
   memory: 512M
   instances: 1
-  buildpack: sdk-for-nodejs
+  buildpacks:
+  - sdk-for-nodejs
   disk_quota: 1536M
