@@ -1,7 +1,17 @@
 # Files listed here will not be deployed
 
 node_modules/
+e2e/
+src/
+.git/
+
+.editorconfig
+.gitignore
+angular.json
+nodemon.json
+tsconfig.json
+tslint.json
+
 .DS_Store
 data
 .idea
-nodemon.json
