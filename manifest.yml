@@ -1,6 +1,6 @@
 ---
 applications:
-- name: STT-Rewrite-CFPUSH
+- name: STT-Rewrite-HYBRID
   path: .
   memory: 512M
   instances: 1
