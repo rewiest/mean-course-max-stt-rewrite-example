@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { disableBindings } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-post-create',
@@ -12,4 +13,7 @@ export class PostCreateComponent implements OnInit {
   ngOnInit() {
   }
 
+  onAddPost() {
+    alert('Save was clicked');
+  }
 }
