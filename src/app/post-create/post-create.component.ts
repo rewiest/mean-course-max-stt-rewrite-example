@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { disableBindings } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-post-create',
@@ -10,7 +9,7 @@ export class PostCreateComponent implements OnInit {
 
   constructor() { }
 
-  enteredValue = '';
+  enteredValue = 'Placeholder Content';
   newPost = 'Inital Post Text';
 
   ngOnInit() {
