@@ -10,10 +10,13 @@ export class PostCreateComponent implements OnInit {
 
   constructor() { }
 
+  enteredValue = '';
+  newPost = 'Inital Post Text';
+
   ngOnInit() {
   }
 
   onAddPost() {
-    alert('Save was clicked');
+    this.newPost = this.enteredValue;
   }
 }
