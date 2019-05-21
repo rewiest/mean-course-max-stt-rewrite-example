@@ -30,6 +30,27 @@ app.use((req, res, next) => {
   next();
 });
 
+// api test
+app.use('/api/posts', (req, res, next) => {
+  const posts = [
+    {
+      id: "001",
+      title: "Post Tile 1",
+      content: "This is the content for post title 1."
+    },
+    {
+      id: "002",
+      title: "Post Tile 2",
+      content: "This is the content for post title 2."
+    }
+  ]
+  res.status(200).json({
+    message: "The post was successfully retrieved!",
+    posts: posts
+  })
+});
+
+
 // api paths and routes
 app.use('/api', userRoutes);
 app.use('/api', actionRoutes);
