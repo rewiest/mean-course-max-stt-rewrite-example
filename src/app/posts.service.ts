@@ -34,7 +34,7 @@ export class PostsService {
       title: title,
       content: content
     };
-    this.http.post< {message: string, post: Post}>(this.apiUrl + '/api/posts', post)
+    this.http.post<{ message: string, post: Post }>(this.apiUrl + '/api/posts', post)
       .subscribe((postData) => {
         console.log(postData);
         this.posts.push(post);
