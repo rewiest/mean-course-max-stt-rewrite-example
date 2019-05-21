@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 });
 
 // api test
-app.use('/api/posts', (req, res, next) => {
+app.get('/api/posts', (req, res, next) => {
   const posts = [
     {
       id: "001",
@@ -44,12 +44,23 @@ app.use('/api/posts', (req, res, next) => {
       content: "This is the content for post title 2."
     }
   ]
+  console.log("Get Posts");
+  console.log(posts);
   res.status(200).json({
     message: "The post was successfully retrieved!",
     posts: posts
-  })
+  });
 });
 
+app.post('/api/posts', (req, res, next) => {
+  const post = req.body;
+  console.log("Add Posts");
+  console.log(post);
+  res.status(201).json({
+    message: "The post was successfully saved!",
+    post: post
+  });
+});
 
 // api paths and routes
 app.use('/api', userRoutes);

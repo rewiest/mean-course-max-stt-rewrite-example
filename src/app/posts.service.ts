@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../environments/environment';
 import { Subject } from 'rxjs';
 import { Post } from './post.model';
+import { stringify } from '@angular/core/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class PostsService {
   getPosts() {
     this.http.get<{ message: string, posts: Post[] }>(this.apiUrl + '/api/posts')
       .subscribe((postData) => {
+        console.log(postData);
         this.posts = postData.posts;
         this.postsUpdated.next([...this.posts]);
       });
@@ -33,7 +35,11 @@ export class PostsService {
       title: title,
       content: content
     };
-    this.posts.push(post);
-    this.postsUpdated.next([...this.posts]);
+    this.http.post< {message: string, post: Post}>(this.apiUrl + '/api/posts', post)
+      .subscribe((postData) => {
+        console.log(postData);
+        this.posts.push(post);
+        this.postsUpdated.next([...this.posts]);
+      });
   }
 }
