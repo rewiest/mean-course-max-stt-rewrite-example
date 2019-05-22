@@ -45,7 +45,7 @@ exports.getPosts = (req, res, next) => {
         error: error
       });
     });
-}
+};
 
 // add post function
 exports.addPost = (req, res, next) => {
@@ -77,5 +77,32 @@ exports.addPost = (req, res, next) => {
     });
 };
 
+// delete post function
+exports.deletePost = (req, res, next) => {
+  console.log('In route - deletePost');
+  let postId = req.params.id;
+  postsDb.get(postId)
+    .then((fetchedPost) => {
+      let latestRev = fetchedPost._rev;
+      return postsDb.destroy(postId, latestRev);
+    })
+    .then((deletedPost) => {
+      if (res.statusCode !== 200) return
+      console.log('Delete post successful for ' + postId);
+      res.status(200).json({
+        message: 'Delete post successful.',
+        post: {
+          id: deletedPost.id
+        }
+      });
+    })
+    .catch((error) => {
+      console.log('Delete post failed for ' + postId);
+      res.status(500).json({
+        message: 'Delete post failed.',
+        error: error
+      });
+    });
+};
 
 

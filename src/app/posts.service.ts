@@ -28,16 +28,27 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
 
-  addPosts(title: string, content: string) {
+  addPosts(newTitle: string, newContent: string) {
     const post: Post = {
       id: null,
-      title: title,
-      content: content
+      title: newTitle,
+      content: newContent
     };
     this.http.post<{ message: string, post: Post }>(this.apiUrl + '/api/posts', post)
       .subscribe((postData) => {
         console.log(postData);
+        post.id = postData.post.id;
         this.posts.push(post);
+        this.postsUpdated.next([...this.posts]);
+      });
+  }
+
+  deletePost(postId: string) {
+    this.http.delete<{ message: string, post: Post }>(this.apiUrl + '/api/posts/' + postId)
+      .subscribe((response) => {
+        console.log(response);
+        const updatedPosts = this.posts.filter(post => post.id !== postId);
+        this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
       });
   }
