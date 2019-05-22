@@ -18,25 +18,34 @@ const postsDb = cloudant.db.use('posts');
 
 // get all posts function
 exports.getPosts = (req, res, next) => {
-  const posts = [
-    {
-      id: "001",
-      title: "Post Tile 1",
-      content: "This is the content for post title 1."
-    },
-    {
-      id: "002",
-      title: "Post Tile 2",
-      content: "This is the content for post title 2."
-    }
-  ]
-  console.log("Get Posts");
-  console.log(posts);
-  res.status(200).json({
-    message: "The post was successfully retrieved!",
-    posts: posts
-  });
-};
+  console.log('In route - getPosts');
+  postsDb.list({'include_docs': true})
+    .then((fetchedPosts) => {
+      console.log(fetchedPosts);
+      posts = [];
+      row = 0;
+      fetchedPosts.rows.forEach((fetchedPost) => {
+        posts[row] = {
+          id: fetchedPost.id,
+          title: fetchedPost.doc.title,
+          content: fetchedPost.doc.content
+        }
+        row = row + 1;
+      });
+      console.log('Get posts successful');
+      res.status(200).json({
+        message: 'Get posts sucessful.',
+        posts: posts
+      })
+    })
+    .catch((error) => {
+      console.log('Get post failed');
+      res.status(500).json({
+        message: 'Get post failed.',
+        error: error
+      });
+    });
+}
 
 // add post function
 exports.addPost = (req, res, next) => {
