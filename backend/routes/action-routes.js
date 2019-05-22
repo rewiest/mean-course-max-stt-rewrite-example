@@ -6,6 +6,10 @@ const ActionController = require('../controllers/action-controller');
 
 const router = express.Router();
 
+router.post('/posts', ActionController.addPost);
+
+router.get('/posts', ActionController.getPosts);
+
 // router.post('/posts', checkAuth, ActionController.addPost);
 
 // router.get('/posts', checkAuth, ActionController.getPosts);

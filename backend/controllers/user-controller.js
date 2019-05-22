@@ -22,7 +22,6 @@ cloudant.db.create('users')
   const usersDb = cloudant.db.use('users');
 
 // create Users database index for email
-var email = {name:'email', type:'json', index:{fields:['email']}}
 usersDb.index({name:'email', type:'json', index:{fields:['email']}})
   .then((response) => {
     console.log('Users database Email index -', response.result);
