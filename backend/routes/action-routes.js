@@ -10,20 +10,10 @@ router.post('/posts', ActionController.addPost);
 
 router.get('/posts', ActionController.getPosts);
 
-// router.get('/posts/:id', ActionController.getPost);
+router.get('/posts/:id', ActionController.getPost);
 
-// router.put('/posts/:id', ActionController.updatePost);
+router.put('/posts/:id', ActionController.updatePost);
 
 router.delete('/posts/:id', ActionController.deletePost);
-
-// router.post('/posts', checkAuth, ActionController.addPost);
-
-// router.get('/posts', checkAuth, ActionController.getPosts);
-
-// router.get('/posts/:id', checkAuth, ActionController.getPost);
-
-// router.put('/posts/:id', checkAuth, ActionController.updatePost);
-
-// router.delete('/posts/:id', checkAuth, ActionController.deletePost);
 
 module.exports = router;

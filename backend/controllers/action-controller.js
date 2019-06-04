@@ -47,6 +47,31 @@ exports.getPosts = (req, res, next) => {
     });
 };
 
+// get one post function
+exports.getPost = (req, res, next) => {
+  console.log('In route - getPost');
+  let postId = req.params.id;
+  postsDb.get(postId)
+    .then((fetchedPost) => {
+      console.log('Get post successful for', postId);
+      res.status(200).json({
+        message: 'Get post successful.',
+        post: {
+          id: fetchedPost._id,
+          title: fetchedPost.title,
+          content: fetchedPost.content
+        }
+      })
+    })
+    .catch((error) => {
+      console.log('Get post failed');
+      res.status(500).json({
+        message: 'Get post failed.',
+        error: error
+      });
+    });
+};
+
 // add post function
 exports.addPost = (req, res, next) => {
   console.log('In route - addPost');
@@ -72,6 +97,41 @@ exports.addPost = (req, res, next) => {
       console.log('Add post failed');
       res.status(500).json({
         message: 'Add post failed.',
+        error: error
+      });
+    });
+};
+
+// update post function
+exports.updatePost = (req, res, next) => {
+  console.log('In route - updatePost');
+  let post = {
+    _id: req.params.id,
+    _rev: '',
+    title: req.body.title,
+    content: req.body.content
+  }
+  postsDb.get(post._id)
+    .then((fetchedPost) => {
+      post._rev = fetchedPost._rev;
+      return postsDb.insert(post);
+    })
+    .then((updatedPost) => {
+      if (res.statusCode !== 200) return
+      console.log('Update post successful for', post._id);
+      res.status(201).json({
+        message: 'Update post successful.',
+        post: {
+          id: updatedPost.id,
+          title: post.title,
+          content: post.content,
+        }
+      });
+    })
+    .catch((error) => {
+      console.log('Update post failed for ' + postId);
+      res.status(500).json({
+        message: 'Update post failed.',
         error: error
       });
     });
