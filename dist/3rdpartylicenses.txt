@@ -89,13 +89,21 @@ THE SOFTWARE.
 
 @angular/material/card
 
+@angular/material/core
+
 @angular/material/expansion
 
 @angular/material/form-field
 
+@angular/material/paginator
+
 @angular/material/progress-spinner
 
+@angular/material/select
+
 @angular/material/toolbar
+
+@angular/material/tooltip
 
 @angular/platform-browser
 MIT
