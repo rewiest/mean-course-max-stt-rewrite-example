@@ -14,14 +14,15 @@ export class PostsService {
   constructor(private http: HttpClient, private router: Router) { }
 
   private posts: Post[] = [];
-  private postsUpdated = new Subject<Post[]>();
+  private postsUpdated = new Subject<{posts: Post[], count: number}>();
   private apiUrl = environment.apiUrl;
 
-  getPosts() {
-    this.http.get<{ message: string, posts: Post[] }>(this.apiUrl + '/api/posts')
+  getPosts(postsPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
+    this.http.get<{ message: string, posts: Post[], count: number }>(this.apiUrl + '/api/posts' + queryParams)
       .subscribe((postData) => {
         this.posts = postData.posts;
-        this.postsUpdated.next([...this.posts]);
+        this.postsUpdated.next({posts: [...this.posts], count: postData.count});
       });
   }
 
@@ -41,9 +42,6 @@ export class PostsService {
     };
     this.http.post<{ message: string, post: Post }>(this.apiUrl + '/api/posts', post)
       .subscribe((postData) => {
-        post.id = postData.post.id;
-        this.posts.push(post);
-        this.postsUpdated.next([...this.posts]);
         this.router.navigate(['/']);
       });
   }
@@ -56,21 +54,11 @@ export class PostsService {
     };
     this.http.put<{ message: string, post: Post }>(this.apiUrl + '/api/posts/' + postId, post)
       .subscribe((postData) => {
-        const updatedPosts = [...this.posts];
-        const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
-        updatedPosts[oldPostIndex] = post;
-        this.posts = updatedPosts;
-        this.postsUpdated.next([...this.posts]);
         this.router.navigate(['/']);
       });
   }
 
   deletePost(postId: string) {
-    this.http.delete<{ message: string, post: Post }>(this.apiUrl + '/api/posts/' + postId)
-      .subscribe((response) => {
-        const updatedPosts = this.posts.filter(post => post.id !== postId);
-        this.posts = updatedPosts;
-        this.postsUpdated.next([...this.posts]);
-      });
+    return this.http.delete<{ message: string, post: Post }>(this.apiUrl + '/api/posts/' + postId);
   }
 }

@@ -19,9 +19,12 @@ const postsDb = cloudant.db.use('posts');
 // get all posts function
 exports.getPosts = (req, res, next) => {
   console.log('In route - getPosts');
-  postsDb.list({'include_docs': true})
+  let pageSize = +req.query.pagesize;
+  let currentPage = +req.query.page;
+  let skip = pageSize * (currentPage - 1);
+  let limit = pageSize;
+  postsDb.list({'include_docs': true, 'skip': skip, 'limit': limit})
     .then((fetchedPosts) => {
-      console.log(fetchedPosts);
       posts = [];
       row = 0;
       fetchedPosts.rows.forEach((fetchedPost) => {
@@ -32,10 +35,12 @@ exports.getPosts = (req, res, next) => {
         }
         row = row + 1;
       });
+      let docCount = fetchedPosts.total_rows;
       console.log('Get posts successful');
       res.status(200).json({
         message: 'Get posts sucessful.',
-        posts: posts
+        posts: posts,
+        count: docCount
       })
     })
     .catch((error) => {
