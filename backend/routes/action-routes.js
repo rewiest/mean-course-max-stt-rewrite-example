@@ -6,14 +6,14 @@ const ActionController = require('../controllers/action-controller');
 
 const router = express.Router();
 
-router.post('/posts', ActionController.addPost);
+router.post('/posts', checkAuth, ActionController.addPost);
 
 router.get('/posts', ActionController.getPosts);
 
 router.get('/posts/:id', ActionController.getPost);
 
-router.put('/posts/:id', ActionController.updatePost);
+router.put('/posts/:id', checkAuth, ActionController.updatePost);
 
-router.delete('/posts/:id', ActionController.deletePost);
+router.delete('/posts/:id', checkAuth, ActionController.deletePost);
 
 module.exports = router;

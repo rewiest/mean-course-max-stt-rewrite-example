@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
 import {
   MatInputModule,
   MatCardModule,
@@ -19,6 +20,10 @@ import { PostCreateComponent } from './post-create/post-create.component';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { LoginComponent } from './login/login.component';
+
+export function jwtTokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -40,7 +45,14 @@ import { LoginComponent } from './login/login.component';
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: jwtTokenGetter,
+        whitelistedDomains: ['localhost:3000', 'stt-rewrite-app.w3ibm.mybluemix.net'],
+        blacklistedRoutes: []
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -40,8 +40,12 @@ exports.userLogin = (req, res, next) => {
   let user = { email: '', firstName: '', lastName: '', preferredName: '', roles: [], _id: '' };
   let password = '';
 
-  if (req.body.email) user.email = req.body.email;
-  if (req.body.password) password = req.body.password;
+  if (req.body.email) {
+    user.email = req.body.email;
+  }
+  if (req.body.password) {
+    password = req.body.password;
+  }
 
   // create ldapclient for ldap bluepages authentication
   const ldapclient = ldap.createClient({
