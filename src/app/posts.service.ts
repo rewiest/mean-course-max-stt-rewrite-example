@@ -38,7 +38,8 @@ export class PostsService {
     const post: Post = {
       id: null,
       title: postTitle,
-      content: postContent
+      content: postContent,
+      creator: null
     };
     this.http.post<{ message: string, post: Post }>(this.apiUrl + '/api/posts', post)
       .subscribe((postData) => {
@@ -46,11 +47,12 @@ export class PostsService {
       });
   }
 
-  updatePost(postId: string, postTitle: string, postContent: string) {
+  updatePost(postId: string, postTitle: string, postContent: string, postCreator: string) {
     const post: Post = {
       id: postId,
       title: postTitle,
-      content: postContent
+      content: postContent,
+      creator: postCreator
     };
     this.http.put<{ message: string, post: Post }>(this.apiUrl + '/api/posts/' + postId, post)
       .subscribe((postData) => {

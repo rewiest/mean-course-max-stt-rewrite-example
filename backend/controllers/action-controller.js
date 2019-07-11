@@ -31,7 +31,8 @@ exports.getPosts = (req, res, next) => {
         posts[row] = {
           id: fetchedPost.id,
           title: fetchedPost.doc.title,
-          content: fetchedPost.doc.content
+          content: fetchedPost.doc.content,
+          creator: fetchedPost.doc.creator
         }
         row = row + 1;
       });
@@ -64,7 +65,8 @@ exports.getPost = (req, res, next) => {
         post: {
           id: fetchedPost._id,
           title: fetchedPost.title,
-          content: fetchedPost.content
+          content: fetchedPost.content,
+          creator: fetchedPost.creator
         }
       })
     })
@@ -82,7 +84,8 @@ exports.addPost = (req, res, next) => {
   console.log('In route - addPost');
   let post = {
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    creator: req.userData.email
   }
   console.log(post);
   postsDb.insert(post)
@@ -94,7 +97,8 @@ exports.addPost = (req, res, next) => {
         post: {
           id: addedPost.id,
           title: post.title,
-          content: post.content
+          content: post.content,
+          creator: post.creator
         }
       });
     })
@@ -114,10 +118,18 @@ exports.updatePost = (req, res, next) => {
     _id: req.params.id,
     _rev: '',
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    creator: req.userData.email
   }
   postsDb.get(post._id)
     .then((fetchedPost) => {
+      if (fetchedPost.creator !== req.userData.email) {
+        console.log('Not authorized.');
+        res.status(401).json({
+          message: 'Not authorized.'
+        });
+        return;
+      }
       post._rev = fetchedPost._rev;
       return postsDb.insert(post);
     })
@@ -130,6 +142,7 @@ exports.updatePost = (req, res, next) => {
           id: updatedPost.id,
           title: post.title,
           content: post.content,
+          creator: post.creator
         }
       });
     })
@@ -148,6 +161,13 @@ exports.deletePost = (req, res, next) => {
   let postId = req.params.id;
   postsDb.get(postId)
     .then((fetchedPost) => {
+      if (fetchedPost.creator !== req.userData.email) {
+        console.log('Not authorized.');
+        res.status(401).json({
+          message: 'Not authorized.'
+        });
+        return;
+      }
       let latestRev = fetchedPost._rev;
       return postsDb.destroy(postId, latestRev);
     })
