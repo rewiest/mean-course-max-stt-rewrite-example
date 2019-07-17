@@ -20,7 +20,7 @@
         name="content"
         [ngModel]="post?.content"
         #content="ngModel"
-        placeholder="Content Title"
+        placeholder="Post Content"
         required></textarea>
       <mat-error *ngIf="content.invalid">Please enter post content.</mat-error>
     </mat-form-field>
